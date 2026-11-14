@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ASTRO-01",
+    "callsign": "Ares-CDR",
+    "role": "Mission Commander",
+    "age": 38,
+    "gender": "Female",
+    "baseline": {
+      "resting_hr_bpm": 62,
+      "systolic_bp_mmHg": 118,
+      "diastolic_bp_mmHg": 76,
+      "spo2_percent": 98.5,
+      "core_temp_c": 36.8,
+      "target_daily_sleep_hrs": 8.0,
+      "cumulative_career_mSv": 74.2
+    }
+  },
+  {
+    "id": "ASTRO-02",
+    "callsign": "Ares-FE1",
+    "role": "Flight Engineer 1",
+    "age": 34,
+    "gender": "Male",
+    "baseline": {
+      "resting_hr_bpm": 58,
+      "systolic_bp_mmHg": 122,
+      "diastolic_bp_mmHg": 78,
+      "spo2_percent": 98.8,
+      "core_temp_c": 36.7,
+      "target_daily_sleep_hrs": 8.0,
+      "cumulative_career_mSv": 42.6
+    }
+  },
+  {
+    "id": "ASTRO-03",
+    "callsign": "Ares-MS1",
+    "role": "Mission Specialist (Science)",
+    "age": 31,
+    "gender": "Female",
+    "baseline": {
+      "resting_hr_bpm": 65,
+      "systolic_bp_mmHg": 115,
+      "diastolic_bp_mmHg": 74,
+      "spo2_percent": 99.0,
+      "core_temp_c": 36.9,
+      "target_daily_sleep_hrs": 8.0,
+      "cumulative_career_mSv": 18.1
+    }
+  }
+]

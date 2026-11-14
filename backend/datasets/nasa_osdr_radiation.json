@@ -1,0 +1,59 @@
+{
+  "dataset_source": "NASA Open Science Data Repository (OSDR) - RadLab & GeneLab",
+  "mission_analog": "Artemis Lunar Transit & Deep Space Analog",
+  "dosimetry_units": "mSv (millisieverts)",
+  "reference_benchmarks": {
+    "earth_sea_level_annual_background_mSv": 2.4,
+    "iss_low_earth_orbit_daily_mSv": 0.5,
+    "deep_space_transit_daily_mSv": 1.8,
+    "solar_particle_event_peak_mSv_hr": 45.0,
+    "nasa_career_limit_mSv": 600.0,
+    "ncrp_annual_limit_mSv": 250.0
+  },
+  "historical_mission_samples": [
+    {
+      "mission": "Apollo 11",
+      "duration_days": 8.0,
+      "mean_absorbed_dose_mGy": 1.8,
+      "effective_dose_mSv": 5.5,
+      "source_reference": "NASA SP-2016-620"
+    },
+    {
+      "mission": "Apollo 14",
+      "duration_days": 9.0,
+      "mean_absorbed_dose_mGy": 11.4,
+      "effective_dose_mSv": 28.5,
+      "source_reference": "NASA SP-2016-620"
+    },
+    {
+      "mission": "ISS Expedition 68 (6 months)",
+      "duration_days": 180.0,
+      "mean_absorbed_dose_mGy": 54.0,
+      "effective_dose_mSv": 86.4,
+      "source_reference": "NASA OSDR OSD-379 RadLab"
+    },
+    {
+      "mission": "Mars Transit Simulation (180 days deep space)",
+      "duration_days": 180.0,
+      "mean_absorbed_dose_mGy": 198.0,
+      "effective_dose_mSv": 330.0,
+      "source_reference": "MSL RAD (Mars Science Laboratory Radiation Assessment Detector)"
+    }
+  ],
+  "biological_stress_markers": [
+    {
+      "marker": "gamma-H2AX foci",
+      "description": "Phosphorylated histone H2AX; primary biomonitor for DNA double-strand breaks caused by HZE ions",
+      "baseline_per_cell": 0.12,
+      "deep_space_elevated_per_cell": 1.45,
+      "nasa_genelab_id": "GL-EXP-202"
+    },
+    {
+      "marker": "8-OHdG (8-hydroxy-2'-deoxyguanosine)",
+      "description": "Urinary marker for cumulative systemic oxidative stress and DNA oxidation",
+      "baseline_ng_mg_creatinine": 4.2,
+      "deep_space_elevated_ng_mg_creatinine": 18.9,
+      "nasa_genelab_id": "GL-EXP-184"
+    }
+  ]
+}

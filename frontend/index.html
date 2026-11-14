@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroPulse // Autonomous Deep-Space Health Cockpit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="hud-container">
+    <!-- TOP NAVIGATION BAR -->
+    <header class="hud-header">
+      <div class="brand">
+        <div class="mission-patch">🚀</div>
+        <div>
+          <h1>ASTROPULSE <span>OS 2.6</span></h1>
+          <p class="subtitle">Autonomous Health Monitoring & Clinical Triage // Team A3thr1X</p>
+        </div>
+      </div>
+
+      <div class="mission-telemetry-meta">
+        <div class="meta-item">
+          <span class="meta-label">MISSION CONTEXT</span>
+          <span class="meta-val">Deep-Space Mars Transit (T+114d)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">EARTH COMMS LATENCY</span>
+          <span class="meta-val highlight-amber">14m 22s (One-Way)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">EDGE AUTONOMY</span>
+          <span class="meta-val highlight-green">100% Offline / Local Edge</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">MISSION TIME (UTC)</span>
+          <span class="meta-val" id="utc-clock">00:00:00 UTC</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SIMULATION SCENARIO CONTROL BAR -->
+    <section class="scenario-bar">
+      <span class="scenario-label">⚡ TELEMETRY SCENARIO SIMULATOR:</span>
+      <div class="scenario-buttons">
+        <button class="scenario-btn active" data-scenario="nominal">Nominal Cruise</button>
+        <button class="scenario-btn alert-btn" data-scenario="solar_flare">⚠️ Solar Particle Event (SPE)</button>
+        <button class="scenario-btn warning-btn" data-scenario="fluid_shift_sans">🧠 Cephalad Fluid Shift (SANS)</button>
+        <button class="scenario-btn danger-btn" data-scenario="hypoxia_co2">💨 Cabin CO2 Life-Support Surge</button>
+      </div>
+      <div class="connection-status">
+        <span class="status-dot online" id="status-dot"></span>
+        <span id="backend-status-text">Local Engine: Connected</span>
+      </div>
+    </section>
+
+    <!-- CREW ROSTER SELECTOR -->
+    <section class="roster-bar" id="roster-container">
+      <!-- Populated by JS -->
+    </section>
+
+    <!-- MAIN DASHBOARD GRID -->
+    <main class="dashboard-grid">
+      <!-- LEFT COLUMN: REAL-TIME BIOMETRICS & ECG -->
+      <section class="card panel-vitals">
+        <div class="card-header">
+          <h2>🫀 Live Biometric Telemetry</h2>
+          <span class="badge" id="astro-callsign-badge">Ares-CDR</span>
+        </div>
+
+        <!-- Real-Time ECG Oscilloscope Canvas -->
+        <div class="ecg-wrapper">
+          <div class="ecg-header">
+            <span>LEAD II CONTINUOUS ECG MONITOR</span>
+            <span class="live-tag">● LIVE STREAM (100 Hz)</span>
+          </div>
+          <canvas id="ecgCanvas" width="560" height="130"></canvas>
+        </div>
+
+        <!-- Metric Gauges Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card" id="card-hr">
+            <span class="metric-title">HEART RATE</span>
+            <div class="metric-val-row">
+              <span class="metric-number" id="val-hr">64</span>
+              <span class="metric-unit">BPM</span>
+            </div>
+            <div class="metric-status" id="status-hr">NOMINAL (Resting)</div>
+          </div>
+
+          <div class="metric-card" id="card-bp">
+            <span class="metric-title">BLOOD PRESSURE</span>
+            <div class="metric-val-row">
+              <span class="metric-number" id="val-bp">118/76</span>
+              <span class="metric-unit">mmHg</span>
+            </div>
+            <div class="metric-status" id="status-bp">PULSE PRESS: 42 mmHg</div>
+          </div>
+
+          <div class="metric-card" id="card-spo2">
+            <span class="metric-title">BLOOD OXYGEN (SpO2)</span>
+            <div class="metric-val-row">
+              <span class="metric-number" id="val-spo2">98.5</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div class="metric-status" id="status-spo2">OXYGENATION OPTIMAL</div>
+          </div>
+
+          <div class="metric-card" id="card-temp">
+            <span class="metric-title">CORE BODY TEMP</span>
+            <div class="metric-val-row">
+              <span class="metric-number" id="val-temp">36.8</span>
+              <span class="metric-unit">°C</span>
+            </div>
+            <div class="metric-status" id="status-temp">THERMOREGULATION STABLE</div>
+          </div>
+
+          <div class="metric-card" id="card-sleep">
+            <span class="metric-title">SLEEP DURATION</span>
+            <div class="metric-val-row">
+              <span class="metric-number" id="val-sleep">7.4</span>
+              <span class="metric-unit">HRS</span>
+            </div>
+            <div class="metric-status" id="status-sleep">CIRCADIAN PHASE: RESTED</div>
+          </div>
+
+          <div class="metric-card" id="card-fluid">
+            <span class="metric-title">FLUID SHIFT (SANS)</span>
+            <div class="metric-val-row">
+              <span class="metric-number" id="val-fluid">1.08</span>
+              <span class="metric-unit">INDEX</span>
+            </div>
+            <div class="metric-status" id="status-fluid">VENOUS CONGESTION: LOW</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MIDDLE COLUMN: ENVIRONMENTAL HAZARDS & NASA RADIATION RADLAB -->
+      <section class="card panel-environment">
+        <div class="card-header">
+          <h2>🛰️ Spaceflight Environmental Hazards</h2>
+          <span class="badge badge-info">NASA OSDR Grounding</span>
+        </div>
+
+        <div class="env-metric-box">
+          <div class="env-row">
+            <div>
+              <span class="env-title">AMBIENT RADIATION FLUX</span>
+              <p class="env-desc">Real-time dosimeter vs deep-space baseline</p>
+            </div>
+            <div class="env-val-display">
+              <span class="env-big-number" id="val-rad">63.4</span>
+              <span class="env-unit">μSv/h</span>
+            </div>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="rad-bar" style="width: 15%;"></div>
+          </div>
+          <div class="env-footnote" id="rad-subtext">Deep-space background: ~60-80 μSv/h (Galactic Cosmic Rays)</div>
+        </div>
+
+        <div class="env-metric-box">
+          <div class="env-row">
+            <div>
+              <span class="env-title">CABIN ATMOSPHERE CO2</span>
+              <p class="env-desc">Carbon Dioxide partial pressure</p>
+            </div>
+            <div class="env-val-display">
+              <span class="env-big-number" id="val-co2">2.25</span>
+              <span class="env-unit">mmHg</span>
+            </div>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill co2-fill" id="co2-bar" style="width: 40%;"></div>
+          </div>
+          <div class="env-footnote" id="co2-subtext">ISS baseline: 2.0-3.0 mmHg | Caution threshold: 3.8 mmHg</div>
+        </div>
+
+        <!-- NASA OSDR Benchmark Comparison Table -->
+        <div class="benchmark-table-box">
+          <div class="table-header">
+            <span>NASA OSDR & HISTORICAL MISSION COMPARISONS</span>
+            <span class="ref-link">OSD-379 RadLab</span>
+          </div>
+          <table class="benchmark-table">
+            <thead>
+              <tr>
+                <th>Mission / Benchmark</th>
+                <th>Duration</th>
+                <th>Dose (mSv)</th>
+                <th>Rate Context</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Earth Sea Level Background</td>
+                <td>1 Year</td>
+                <td>2.4 mSv</td>
+                <td>Natural terrestrial background</td>
+              </tr>
+              <tr>
+                <td>ISS Low Earth Orbit (Exp 68)</td>
+                <td>180 Days</td>
+                <td>86.4 mSv</td>
+                <td>Geomagnetically shielded</td>
+              </tr>
+              <tr>
+                <td>Apollo 14 Lunar Excursion</td>
+                <td>9 Days</td>
+                <td>28.5 mSv</td>
+                <td>Translunar transit</td>
+              </tr>
+              <tr class="highlight-row">
+                <td>Mars Deep Space Transit (Simulation)</td>
+                <td>180 Days</td>
+                <td>330.0 mSv</td>
+                <td>MSL RAD detector benchmark</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: AUTONOMOUS CLINICAL TRIAGE & COUNTERMEASURES -->
+      <section class="card panel-triage">
+        <div class="card-header">
+          <h2>🩺 Autonomous Clinical Triage</h2>
+          <span class="status-pill pill-nominal" id="overall-status-pill">NOMINAL</span>
+        </div>
+
+        <!-- ACTIVE ALERTS LIST -->
+        <div class="triage-section">
+          <h3 class="section-title">ACTIVE PHYSIOLOGICAL ALERTS</h3>
+          <div class="alert-feed" id="alert-feed-container">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- ACTIONABLE COUNTERMEASURE PROTOCOLS -->
+        <div class="triage-section">
+          <h3 class="section-title">ACTIONABLE MEDICAL COUNTERMEASURES</h3>
+          <div class="countermeasure-list" id="countermeasure-container">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER CITATIONS -->
+    <footer class="hud-footer">
+      <div class="footer-left">
+        <strong>NASA Space Apps Challenge 2026</strong> // Challenge: <em>Create Health Monitoring Software for Astronauts on Space Missions</em>
+      </div>
+      <div class="footer-right">
+        Data Sources: <strong>NASA OSDR RadLab (OSD-379)</strong>, <strong>NASA GeneLab</strong>, <strong>NASA Human Research Program (STD-3001)</strong>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
