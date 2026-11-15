@@ -11,7 +11,7 @@
 * **Team Members**:
   - Hari Muthu Ganesh R (Team Lead & Systems Architecture)
   - Syed Sufyan M (Biometric Data Engineering & ML Models)
-  - Sarathi Kamal N (Frontend Cockpit & Human Factors UX)
+  - Afzal Ali K A H (Frontend Cockpit & Human Factors UX)
 * **Visual**: AstroPulse mission patch icon with Deep Space Orion / Mars transit backdrop.
 
 ---

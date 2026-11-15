@@ -2,7 +2,7 @@
 
 **NASA Space Apps Challenge 2026**  
 **Challenge**: *Create Health Monitoring Software for Astronauts on Space Missions*  
-**Team**: **A3thr1X** (Hari Muthu Ganesh R, Syed Sufyan M, Sarathi Kamal N)  
+**Team**: **A3thr1X** (Hari Muthu Ganesh R, Syed Sufyan M, Afzal Ali K A H)  
 **Institution**: National Engineering College
 
 ---
